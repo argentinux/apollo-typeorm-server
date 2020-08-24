@@ -30,6 +30,8 @@
   },
   "dependencies": {
     "cross-env": "^7.0.2",
+    "dotenv": "^8.2.0",
+    "loglevel": "^1.6.8",
     "typescript": "3.9"
   },
   "husky": {
