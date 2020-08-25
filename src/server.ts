@@ -6,18 +6,20 @@ import { ApolloServer } from 'apollo-server-express'
 import { buildSchema } from 'type-graphql'
 import HelloResolver from './resolvers/hello'
 import { DB_CONFIG, __APP_PORT__ } from './config'
+import ListResolver from './resolvers/list'
+import { AppContext } from './types'
 
 export const startServer = async (manager: EntityManager) => {
   const app = express()
 
   const schema = await buildSchema({
-    resolvers: [HelloResolver],
+    resolvers: [HelloResolver, ListResolver],
     validate: false,
   })
 
   const apolloServer = new ApolloServer({
     schema,
-    context: manager,
+    context: (): AppContext => ({ em: manager }),
   })
 
   apolloServer.applyMiddleware({ app })
