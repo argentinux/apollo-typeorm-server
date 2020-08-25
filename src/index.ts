@@ -1,18 +1,15 @@
 import 'reflect-metadata'
-import { createConnection } from 'typeorm'
 import log from 'loglevel'
-import { DB_CONFIG } from './config'
+import { __LOG_LEVEL__ } from './config'
+import { startServer, startDB } from './server'
 
-async function startDB() {
-  try {
-    const conn = await createConnection(DB_CONFIG)
-    log.info(`> DB is connected: ${conn.isConnected ? 'YES' : 'NO'}`)
+log.setLevel(__LOG_LEVEL__)
 
-    // WORK WITH CONNECTION
-  } catch (err) {
-    log.error(`> Error occurred while trying to connect the db: ${err.message}`)
-    process.exit()
-  }
+async function startApp() {
+  const manager = await startDB()
+  startServer(manager).catch((err) => {
+    log.error(`> Fail to start server ${err.message}`)
+  })
 }
 
-startDB()
+startApp()

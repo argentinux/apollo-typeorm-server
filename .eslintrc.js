@@ -2,15 +2,17 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 6,
-    sourceType: 'module'
+    sourceType: 'module',
   },
   extends: [
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
   ],
   env: {
-    node: true
+    node: true,
   },
-  rules: {}
+  rules: {
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+  },
 }
